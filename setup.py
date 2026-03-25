@@ -1,6 +1,14 @@
 from setuptools import find_packages, setup
+from pathlib import Path
 
-version = "0.1.1"
+def read_version():
+    ns = {}
+    path = Path("signlang_segmenter") / "_version.py"
+    with path.open("r", encoding="utf-8") as f:
+        exec(f.read(), ns)
+    return ns["__version__"]
+
+version = read_version()
 
 setup(
     name="signlang-segmenter",
