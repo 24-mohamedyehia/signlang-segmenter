@@ -1,6 +1,5 @@
 """Top-level package for signlang_segmenter."""
 
-from ..setup import version
+from ._version import __version__
 
-__version__ = version
 __all__ = ["video", "pose"]
