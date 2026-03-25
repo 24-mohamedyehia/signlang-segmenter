@@ -5,42 +5,15 @@ A Python library for sign language segmentation.
 ## Optical Flow
 ![motion curve with segments](./public/image.png)
 
-## Important Naming Note
-
-- Distribution/package name: `signlang-segmenter`
-- Python import name: `signlang_segmenter`
-
-Python imports use underscores, not dashes.
-
-## Current Layout
-
-```text
-signlang-segmenter/
-├── signlang_segmenter/
-│   ├── __init__.py
-│   ├── video/
-│   │   ├── __init__.py
-│   │   └── optical_flow/
-│   │       ├── __init__.py
-│   │       ├── segmenter.py
-│   │       ├── motion_analyzer.py
-│   │       ├── models.py
-│   │       ├── utils.py
-│   │       ├── exporter.py
-│   │       └── visualization.py
-│   └── pose/
-│       └── __init__.py
-├── examples/
-│   └── basic_pipeline.ipynb
-├── setup.py
-└── README.md
-```
-
 ## Installation
 
 ### Option 1: Install the library to use it
 
-If you only want to use the package in your own project, install it directly from GitHub:
+```bash
+pip install signlang-segmenter
+```
+
+Or install it directly from GitHub:
 
 ```bash
 python -m pip install "git+https://github.com/24-mohamedyehia/signlang-segmenter.git"
@@ -59,7 +32,7 @@ cd signlang-segmenter
 conda create -n signlang-segmenter python=3.11 -y
 conda activate signlang-segmenter
 python -m pip install --upgrade pip
-python -m pip install -e .
+python -m pip install -e ".[dev]"
 
 ```
 
@@ -71,7 +44,7 @@ import signlang_segmenter.video
 import signlang_segmenter.pose
 ```
 
-## Segmentation API (MVP)
+## Segmentation API
 
 ```python
 from signlang_segmenter.video import VideoSegmenter, SegmentExporter
