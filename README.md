@@ -63,25 +63,6 @@ python -m pip install -e .
 
 ```
 
-## Publish to PyPI (Maintainers)
-
-This repository includes a GitHub Actions workflow at `.github/workflows/pypi-publish.yaml`.
-
-1. Create an account on PyPI and create an API token.
-2. In GitHub repo settings, add a secret named `PYPI_API_TOKEN` with that token value.
-3. Make sure `setup.py` has the correct `version` (must be new for each release).
-4. Create a GitHub Release (or run the workflow manually from Actions).
-5. The workflow will build the package, validate `dist/*`, and publish automatically to PyPI.
-
-Recommended release order:
-
-```bash
-git add .
-git commit -m "Prepare release v0.1.1"
-git tag v0.1.1
-git push --follow-tags
-```
-
 ## Quick Import Check
 
 ```python
