@@ -1,0 +1,1 @@
+"""Pose segmentation subpackage placeholder."""
