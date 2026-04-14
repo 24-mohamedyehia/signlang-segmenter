@@ -23,11 +23,14 @@ setup(
     install_requires=[
         "opencv-python==4.11.0.86",
         "numpy==1.26.4",
-        "matplotlib==3.7.3"
+        "matplotlib==3.7.3",
+        "pandas>=1.5.0",
+        "tqdm>=4.66.0"
     ],
     extras_require={
         "dev": [
-        "notebook==6.5.4"
+            "notebook==6.5.4",
+            "ipywidgets>=8.0.0"
         ],
     },
     classifiers=[

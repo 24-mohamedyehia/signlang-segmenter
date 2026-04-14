@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 400">
+  <defs>
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f172a" />
+      <stop offset="50%" stop-color="#1e1b4b" />
+      <stop offset="100%" stop-color="#312e81" />
+    </linearGradient>
+    
+    <linearGradient id="accent-grad" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#38bdf8" />
+      <stop offset="100%" stop-color="#818cf8" />
+    </linearGradient>
+    
+    <pattern id="grid" width="40" height="40" patternUnits="userSpaceOnUse">
+      <path d="M 40 0 L 0 0 0 40" fill="none" stroke="#ffffff" stroke-opacity="0.05" stroke-width="1"/>
+    </pattern>
+
+    <filter id="glow">
+      <feGaussianBlur stdDeviation="5" result="coloredBlur"/>
+      <feMerge>
+        <feMergeNode in="coloredBlur"/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="400" fill="url(#bg-grad)" />
+  <rect width="1200" height="400" fill="url(#grid)" />
+
+  <!-- Abstract Video Segmentation Graphics -->
+  <g transform="translate(100, 100)" opacity="0.8">
+    <!-- Video track -->
+    <rect x="0" y="220" width="1000" height="40" rx="8" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+    
+    <!-- Segments -->
+    <rect x="50" y="222" width="150" height="36" rx="6" fill="#38bdf8" fill-opacity="0.6"/>
+    <rect x="350" y="222" width="200" height="36" rx="6" fill="#818cf8" fill-opacity="0.6"/>
+    <rect x="700" y="222" width="120" height="36" rx="6" fill="#c084fc" fill-opacity="0.6"/>
+    
+    <!-- Playhead / Cutter -->
+    <path d="M 350 200 L 350 280" stroke="#f87171" stroke-width="4" filter="url(#glow)"/>
+    <polygon points="340,200 360,200 350,215" fill="#f87171"/>
+    
+    <path d="M 700 200 L 700 280" stroke="#f87171" stroke-width="4" filter="url(#glow)"/>
+    <polygon points="690,200 710,200 700,215" fill="#f87171"/>
+    
+    <!-- Nodes / Hands representation (Abstract) -->
+    <g transform="translate(50, -50)" stroke="url(#accent-grad)" stroke-width="3" fill="none">
+      <circle cx="850" cy="50" r="8" fill="#38bdf8" />
+      <circle cx="900" cy="20" r="6" fill="#818cf8" />
+      <circle cx="920" cy="80" r="7" fill="#c084fc" />
+      <line x1="850" y1="50" x2="900" y2="20" />
+      <line x1="850" y1="50" x2="920" y2="80" />
+      <line x1="900" y1="20" x2="920" y2="80" />
+    </g>
+  </g>
+
+  <!-- Typography -->
+  <text x="100" y="160" font-family="system-ui, -apple-system, sans-serif" font-size="72" font-weight="800" fill="#ffffff" letter-spacing="-1.5">
+    signlang<tspan fill="url(#accent-grad)">-segmenter</tspan>
+  </text>
+  
+  <text x="105" y="210" font-family="system-ui, -apple-system, sans-serif" font-size="24" font-weight="400" fill="#94a3b8" letter-spacing="1">
+    INTELLIGENT SIGN LANGUAGE VIDEO SEGMENTATION &amp; CLIPPING
+  </text>
+
+  <!-- Feature tags -->
+  <g transform="translate(100, 250)" font-family="system-ui, -apple-system, sans-serif" font-size="14" font-weight="600" fill="#ffffff">
+    <rect x="0" y="0" width="120" height="32" rx="16" fill="#0369a1" fill-opacity="0.3" stroke="#0ea5e9" stroke-width="1.5"/>
+    <text x="60" y="21" text-anchor="middle">Optical Flow</text>
+    
+    <rect x="135" y="0" width="150" height="32" rx="16" fill="#4338ca" fill-opacity="0.3" stroke="#6366f1" stroke-width="1.5"/>
+    <text x="210" y="21" text-anchor="middle">Timecode Clipping</text>
+
+    <rect x="300" y="0" width="140" height="32" rx="16" fill="#7e22ce" fill-opacity="0.3" stroke="#a855f7" stroke-width="1.5"/>
+    <text x="370" y="21" text-anchor="middle">Pose Estimation</text>
+  </g>
+</svg>
