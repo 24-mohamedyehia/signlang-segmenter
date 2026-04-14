@@ -1,9 +1,16 @@
-# signlang-segmenter
+<div align="center">
 
-A Python library for sign language segmentation.
+<img src="public/banner.svg" alt="signlang-segmenter Banner" width="100%"/>
+
+</div>
+<br/>
+<br/>
+
+# signlang-segmenter
+A Python library for segmenting and clipping sign language videos into meaningful units. It provides dual capabilities: intelligent segmentation based on motion analysis, and fast, precise video clipping based on timestamp annotations. Includes tools for visualizing motion curves and exporting segmented video clips.
 
 ## Optical Flow
-![motion curve with segments](./public/image.png)
+![motion curve with segments](./public/OpticalFlow.png)
 
 ## Installation
 
@@ -44,7 +51,22 @@ import signlang_segmenter.video
 import signlang_segmenter.pose
 ```
 
-## Segmentation API
+## Timecode Clipping API
+
+Fast snippet extraction based on manual annotation tools or generated timecodes:
+
+```python
+from signlang_segmenter.video import split_video_with_timecode
+
+output = split_video_with_timecode(
+    annotations_dir="./annotations",
+    videos_dir="./videos",
+    output_dir="./clips",
+    csv_file="./annotations.csv",
+)
+```
+
+## Motion Segmentation API
 
 ```python
 from signlang_segmenter.video import VideoSegmenter, SegmentExporter
