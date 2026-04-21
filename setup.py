@@ -17,6 +17,8 @@ setup(
     long_description=open("README.md", encoding="utf-8").read(),
     long_description_content_type="text/markdown",
     author="Mohamed Yehia",
+    author_email="mo.yehia.824@gmail.com",
+    license="MIT",
     url="https://github.com/24-mohamedyehia/signlang-segmenter",
     packages=find_packages(),
     python_requires=">=3.10",
