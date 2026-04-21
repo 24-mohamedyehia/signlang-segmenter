@@ -60,6 +60,11 @@ import signlang_segmenter.pose
 
 ## Timecode Clipping API
 
+> **Note:** This feature requires `ffmpeg` to be installed on your system and available in your `PATH`.
+> - **Ubuntu/Debian:** `sudo apt install ffmpeg`
+> - **macOS:** `brew install ffmpeg`
+> - **Windows:** Download from the [FFmpeg official website](https://ffmpeg.org/download.html), or install via Winget (`winget install ffmpeg`) or Chocolatey (`choco install ffmpeg`).
+
 Fast snippet extraction based on manual annotation tools or generated timecodes:
 
 ```python
