@@ -87,6 +87,69 @@ def split_video_with_timecode(
 
     records: list[ClipRecord] = []
     global_counter = 1
+    processed_tasks: set[tuple[str, str, str]] = set()
+
+    if csv_file:
+        csv_path = Path(csv_file)
+        csv_path.parent.mkdir(parents=True, exist_ok=True)
+        if csv_path.exists() and csv_path.stat().st_size > 0:
+            with csv_path.open("r", encoding="utf-8") as f:
+                reader = csv.DictReader(f)
+                for row in reader:
+                    processed_tasks.add((row.get("annotation_file", ""), row.get("start_tc", ""), row.get("end_tc", "")))
+
+                    def _parse_int(val: Any) -> int | None:
+                        try:
+                            return int(val) if val else None
+                        except (ValueError, TypeError):
+                            return None
+
+                    def _parse_float(val: Any) -> float | None:
+                        try:
+                            return float(val) if val else None
+                        except (ValueError, TypeError):
+                            return None
+
+                    records.append(
+                        ClipRecord(
+                            attachment_id=row.get("attachment_id", ""),
+                            width=_parse_int(row.get("width")),
+                            height=_parse_int(row.get("height")),
+                            duration=_parse_float(row.get("duration")) or 0.0,
+                            fps=_parse_float(row.get("fps")),
+                            text=row.get("text", ""),
+                            source_video=row.get("source_video", ""),
+                            annotation_file=row.get("annotation_file", ""),
+                            start_tc=row.get("start_tc", ""),
+                            end_tc=row.get("end_tc", ""),
+                        )
+                    )
+                    
+                    try:
+                        att_id = row.get("attachment_id", "")
+                        num = int(att_id.split("_")[-1].split(".")[0])
+                        if num >= global_counter:
+                            global_counter = num + 1
+                    except (ValueError, IndexError):
+                        pass
+        else:
+            with csv_path.open("w", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(
+                    f,
+                    fieldnames=[
+                        "attachment_id",
+                        "width",
+                        "height",
+                        "duration",
+                        "fps",
+                        "text",
+                        "source_video",
+                        "annotation_file",
+                        "start_tc",
+                        "end_tc",
+                    ],
+                )
+                writer.writeheader()
 
     annotation_files = sorted(p for p in annotations_path.iterdir() if p.suffix.lower() == ".txt")
 
@@ -103,6 +166,9 @@ def split_video_with_timecode(
         segments = parse_annotation_segments(content, pattern=pattern)
 
         for label, start_tc, end_tc in segments:
+            if (annotation_file.name, start_tc, end_tc) in processed_tasks:
+                continue
+
             clip_tasks.append({
                 "video_path": video_path,
                 "annotation_file": annotation_file,
@@ -137,21 +203,39 @@ def split_video_with_timecode(
             )
             subprocess.run(cmd, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, check=False)
 
-        records.append(
-            ClipRecord(
-                attachment_id=clip_name,
-                width=task["width"],
-                height=task["height"],
-                duration=duration,
-                fps=task["fps"],
-                text=label,
-                source_video=os.path.basename(video_path),
-                annotation_file=annotation_file.name,
-                start_tc=start_tc,
-                end_tc=end_tc,
-            )
+        record = ClipRecord(
+            attachment_id=clip_name,
+            width=task["width"],
+            height=task["height"],
+            duration=duration,
+            fps=task["fps"],
+            text=label,
+            source_video=os.path.basename(video_path),
+            annotation_file=annotation_file.name,
+            start_tc=start_tc,
+            end_tc=end_tc,
         )
+        records.append(record)
         global_counter += 1
+
+        if csv_file:
+            with csv_path.open("a", newline="", encoding="utf-8") as f:
+                writer = csv.DictWriter(
+                    f,
+                    fieldnames=[
+                        "attachment_id",
+                        "width",
+                        "height",
+                        "duration",
+                        "fps",
+                        "text",
+                        "source_video",
+                        "annotation_file",
+                        "start_tc",
+                        "end_tc",
+                    ],
+                )
+                writer.writerow(asdict(record))
 
     rows = [asdict(r) for r in records]
     try:
@@ -160,27 +244,5 @@ def split_video_with_timecode(
         output: Any = pd.DataFrame(rows)
     except ImportError:
         output = rows
-
-    if csv_file:
-        csv_path = Path(csv_file)
-        csv_path.parent.mkdir(parents=True, exist_ok=True)
-        with csv_path.open("w", newline="", encoding="utf-8") as f:
-            writer = csv.DictWriter(
-                f,
-                fieldnames=[
-                    "attachment_id",
-                    "width",
-                    "height",
-                    "duration",
-                    "fps",
-                    "text",
-                    "source_video",
-                    "annotation_file",
-                    "start_tc",
-                    "end_tc",
-                ],
-            )
-            writer.writeheader()
-            writer.writerows(rows)
 
     return output

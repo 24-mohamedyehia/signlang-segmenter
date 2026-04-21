@@ -1,13 +1,20 @@
 <div align="center">
 
-<img src="public/banner.svg" alt="signlang-segmenter Banner" width="100%"/>
+<img src="https://raw.githubusercontent.com/24-mohamedyehia/signlang-segmenter/main/public/banner.svg" alt="signlang-segmenter Banner" width="100%"/>
 
-</div>
-<br/>
-<br/>
+<p>
+  <a href="https://pypi.org/project/signlang-segmenter/"><img src="https://img.shields.io/pypi/v/signlang-segmenter.svg" alt="PyPI Version"></a>
+  <img src="https://img.shields.io/badge/python-3.9%2B-blue.svg" alt="Python Versions">
+  <a href="https://github.com/24-mohamedyehia/signlang-segmenter/blob/main/LICENSE"><img src="https://img.shields.io/github/license/24-mohamedyehia/signlang-segmenter.svg" alt="License"></a>
+</p>
 
 # signlang-segmenter
 A Python library for segmenting and clipping sign language videos into meaningful units. It provides dual capabilities: intelligent segmentation based on motion analysis, and fast, precise video clipping based on timestamp annotations. Includes tools for visualizing motion curves and exporting segmented video clips.
+
+</div>
+
+<br/>
+<br/>
 
 ## Optical Flow
 ![motion curve with segments](./public/OpticalFlow.png)
